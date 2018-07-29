@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>Form</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="col-md-6" >
+	<form>
+		<div class="form-group">
+			<label>Họ tên</label>
+			<input type="text" class="form-control" id="name"/>
+		</div>
+		<div class="form-group">
+			<label>Ngày sinh</label>
+			<input type="date" class="form-control" id="birthday"/>
+		</div>
+		<div class="form-group">
+			<label>Khoa</label>
+			<input type="text" class="form-control" id="khoa"/>
+		</div>
+		<div class="form-group">
+			<label>Điểm TB</label>
+			<input type="text" class="form-control" id="diemtb"/>
+		</div>
+		<button type="button" id="add" class="btn btn-primary">Add</button>
+	</form>
+	
+	<div>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+				<th>STT</th>
+				<th>Họ tên</th>
+				<th>Ngày sinh</th>
+				<th>Khoa</th>
+				<th>Điểm TB</th>
+				<th>Action</th>
+			</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+	<div>
+	</div>
+	
+	<script>
+		var sv_list = [];
+		
+		function genList(){
+			var html = ""
+			$.each(sv_list, function(i, item){
+				var stt = i + 1;
+				html += '<tr>'+
+							'<td>' + stt + '</td>' +
+							'<td>' + item.name + '</td>' +
+							'<td>' + item.birthday + '</td>' +
+							'<td>' + item.khoa + '</td>' +
+							'<td>' + item.diemtb + '</td>' +
+							'<td> <button data-id="'+ i +'" class="btn btn-primary edit">Edit</button> <button data-id="'+ i +'" class="btn btn-danger delete">Delete</button> </td>' +
+						'</tr>';
+			
+			});
+			$('tbody').html(html);
+			$('.edit').on('click', function(){
+				var id = $(this).data('id');
+				var name = $('#name').val(sv_list[id].name);
+				var birthday = $('#birthday').val(sv_list[id].birthday);
+				var khoa = $('#khoa').val(sv_list[id].khoa);
+				var diemtb = $('#diemtb').val(sv_list[id].diemtb);
+				$('#add').attr('data-id', id);
+				$('#add').text('Update');
+			})
+			$('.delete').on('click', function(){
+				var id = $(this).data('id');
+				console.log(id);
+				sv_list.splice(id, 1);
+				genList();
+			})
+		}
+		
+		$('#add').on('click', function(){
+			var name = $('#name').val();
+			var birthday = $('#birthday').val();
+			var khoa = $('#khoa').val();
+			var diemtb = $('#diemtb').val();
+			if($('#add').text() == 'Add'){ 
+				var sv = {name: name, birthday: birthday, khoa: khoa, diemtb: diemtb};
+				sv_list.push(sv); 
+			} else{
+			
+				var id = $('#add').attr('data-id');
+				console.log(id);
+				sv_list[id].name = name;
+				sv_list[id].birthday = birthday;
+				sv_list[id].khoa = khoa;
+				sv_list[id].diemtb = diemtb;
+				$('#add').text('Add');
+				$('#add').removeAttr('data-id');
+			}
+			genList();
+		});
+	
+		
+	</script>
+</body>
+</html>

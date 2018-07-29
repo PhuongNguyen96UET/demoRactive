@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quan ly sinh vien</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="target_title"></div>
+    <div id="target_form"></div>
+    <div id="target_table"></div>
+    <script id="template_title" type="text/ractive">
+        <div id="btn_title" class="col-md-12">
+        <h3>Quản lý sinh viên</h3>
+        <div class="btn btn-primary">Thêm sinh viên</div>
+        </div>
+    </script>
+    <script id="template_table" type="text/ractive">
+        <div id="form" class="col-md-12">
+        <form action="" class="col-md-6">
+            <div>
+                <label for="name" class="col-md-2">Họ tên</label>
+                <input type="text" name={{name}} id="name"  value="{{name}}" class='description' class="col-md-4 form-control">
+            </div>
+            <div>
+                <label for="dob" class="col-md-2">Ngày sinh</label>
+                <input type="date" name={{dob}} id="dob" value="{{dob}}" class="col-md-4 form-control">
+            </div>
+            <div>
+                <label for="major" class="col-md-2">Khoa</label>
+                <input type="text" name={{major}} id="major" value="{{major}}" class="col-md-4 form-control">
+            </div>
+            <div>
+                <label for="mark" class="col-md-2">Điểm TB</label>
+                <input type="text" name={{mark}} id="mark" value="{{mark}}" class="col-md-4 form-control">
+            </div>
+            <div class="btn-group col-md-6">
+                <button class="btn btn-primary" on-click="add" id="add" type="submit">Add</button>
+                <button class="btn btn-default" type="reset">Reset</button>
+            </div>
+        </form>
+        </div>
+        <div class="table col-md-12">
+        <h3>Danh sách sinh viên</h3>
+        <table class="table-bordered col-md-6">
+                <tr>
+                    <th>STT</th>
+                    <th>Ho ten</th>
+                    <th>Ngay sinh</th>
+                    <th>Khoa</th>
+                    <th>Diem</th>
+                    <th>Thao tac</th>
+                </tr>
+              
+                {{#each students: num}}
+                  <tr>
+                    <td>{{num + 1}}</td>
+                    <td>{{name}}</td>
+                    <td>{{dob}}</td>
+                    <td>{{major}}</td>
+                    <td>{{mark}}</td>
+                    <td>
+                        <button class="btn btn-primary" id="edit">Sửa</button>
+                        <button class="btn btn-danger" id="delete" on-click='@context.splice( "../", @index, 1 )'>Xóa</button>
+                    </td>
+                  </tr>
+                {{/each}}
+        </table>
+    </div>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/ractive"></script>
+    <!-- <script type="text/javascript" src="form.js"></script> -->
+    <script type="text/javascript" src="title.js"></script>
+    <script type="text/javascript" src="table.js"></script>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+<style>
+    .btn-group{
+        margin-top: 10px;
+    }
+    .btn{
+        margin-right: 5px;
+    }
+    tr th td {
+        padding: 10px;
+    }
+</style>
+</html>
